@@ -143,6 +143,14 @@ input:not([type=checkbox]):not([type=range]) {
 .pill.pick { background: var(--lemon); }
 .pill.warn { background: var(--peach); }
 
+/* AI status pill in the top bar: grey = untested, green = last call worked, peach = error */
+.ai-pill {
+  align-self: center; padding: .15rem .6rem; border: 2px solid var(--ink); border-radius: 999px;
+  background: #eee; font-size: .85rem; font-weight: 700; white-space: nowrap;
+}
+.ai-pill.ok { background: var(--mint); }
+.ai-pill.error { background: var(--peach); }
+
 /* ---------- gear + drawer (lower right) ---------- */
 .gear {
   position: fixed; right: 18px; bottom: 18px; z-index: 30;

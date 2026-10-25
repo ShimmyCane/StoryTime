@@ -58,8 +58,11 @@
   <tr><td><code>js/save.js</code></td><td><span class="badge js">JS</span></td><td>Review panel and Save.</td></tr>
   <tr><td><code>js/library.js</code></td><td><span class="badge js">JS</span></td><td>Saved stories (mine / all family), open, read aloud, export JSON, delete.</td></tr>
   <tr><td><code>js/dashboard.js</code></td><td><span class="badge js">JS</span></td><td>Story count, time told, forks, top keywords, "next time try" hints.</td></tr>
+  <tr><td><code>js/ai.js</code></td><td><span class="badge js">JS</span></td><td>Optional AI: opening (Start), suggested forks (Narrate), critique (Save). Calls the <code>ai</code> Edge Function; status pill and ⚙️ Test AI show errors (no key, quota, bad key, sign-in).</td></tr>
   <tr><td><code>js/app.js</code></td><td><span class="badge js">JS</span></td><td>Startup order; loads device data first, then Supabase.</td></tr>
   <tr><td><code>css/*.css</code></td><td><span class="badge css">CSS</span></td><td><code>base</code> (pastel tokens in <code>:root</code>, two-column layout, buttons, panels, gear), <code>dials</code>, <code>narrate</code>, <code>library</code>.</td></tr>
+  <tr><td><code>supabase/functions/ai/index.ts</code></td><td><span class="badge sql">EDGE</span></td><td>Holds the Gemini key, builds prompts, returns result or error code. Deploy with JWT verification on.</td></tr>
+  <tr><td><code>supabase/schema_ai.sql</code></td><td><span class="badge sql">SQL</span></td><td><code>storytime_ai_key</code>: one row, the key only. Locked from the browser; read only by the Edge Function.</td></tr>
   <tr><td><code>supabase/schema.sql</code></td><td><span class="badge sql">SQL</span></td><td><code>storytime_stories</code>, <code>storytime_member_settings</code>; RLS for the signed-in family login.</td></tr>
 </table>
 

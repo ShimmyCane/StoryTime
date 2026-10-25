@@ -39,4 +39,7 @@ Files
 - js/ — config, db, state, ui, members, dials, opening, narrate, recorder, decisions, keywords, save, library, dashboard, app
 - data/ — levels.js, dials.js, templates.js, stop_words.js
 - supabase/schema.sql — run once in the Supabase SQL Editor.
+- supabase/schema_ai.sql — run once after schema.sql; holds the Gemini key (key only).
+- supabase/functions/ai/index.ts — Edge Function that calls Gemini for the AI buttons.
+- js/ai.js — AI buttons (Opening, Suggest, Critique) and status pill.
 - todo.md — refinement log.

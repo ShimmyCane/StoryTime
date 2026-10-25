@@ -17,6 +17,7 @@
   <!-- ===== Top bar: title, who is telling, reading level ===== -->
   <header class="topbar">
     <h1>📖 StoryTime <span>讲故事</span> <span id="cloudBadge" class="cloud">📱</span></h1>
+    <span id="aiStatus" class="ai-pill unknown" title="Not tested yet">AI ?</span>
     <div id="memberBar" class="member-bar"></div>
     <div class="level-box">
       <select id="levelSelect" aria-label="Reading level"></select>
@@ -46,6 +47,7 @@
           <button id="readOpeningBtn" class="mid-btn">🔊 Read 读</button>
           <button id="pinyinBtn" class="mid-btn toggle">拼 pinyin</button>
           <button id="englishBtn" class="mid-btn toggle">EN</button>
+          <button id="aiOpeningBtn" class="mid-btn">🤖 AI opening</button>
         </div>
         <div id="opening" class="opening"></div>
 
@@ -77,7 +79,10 @@
         </div>
         <input id="forkQuestion" placeholder="接下来怎么办？ What happens next?">
         <div id="forkOptions" class="fork-options"></div>
-        <button id="forkMakeBtn" class="big-btn soft">Ask 问一问</button>
+        <div class="row">
+          <button id="forkMakeBtn" class="big-btn soft">Ask 问一问</button>
+          <button id="aiForksBtn" class="mid-btn">🤖 Suggest 建议</button>
+        </div>
         <div id="forkPending" class="fork-pending"></div>
         <ul id="forkLog" class="fork-log"></ul>
       </details>
@@ -99,6 +104,9 @@
           <dt>Time</dt><dd id="reviewDuration"></dd>
         </dl>
         <p id="reviewTranscript" class="review-text"></p>
+        <div class="row">
+          <button id="aiCritiqueBtn" class="mid-btn">🤖 Critique 点评</button>
+        </div>
         <button id="saveBtn" class="big-btn primary">💾 Save story</button>
       </details>
 
@@ -143,6 +151,11 @@
       </select>
     </label>
     <label class="switch"><input type="checkbox" id="showErrorsToggle"> Show errors</label>
+    <hr>
+    <h3>AI 智能助手</h3>
+    <p class="muted">Uses the key saved in Supabase. Shows what is wrong if AI is not working.</p>
+    <button id="aiTestBtn" class="mid-btn">Test AI 测试</button>
+    <p id="aiTestResult" class="muted"></p>
   </div>
 
   <div id="modal" class="modal hidden">
@@ -174,6 +187,7 @@
   <script src="js/recorder.js"></script>
   <script src="js/decisions.js"></script>
   <script src="js/keywords.js"></script>
+  <script src="js/ai.js"></script>
   <script src="js/save.js"></script>
   <script src="js/library.js"></script>
   <script src="js/dashboard.js"></script>
