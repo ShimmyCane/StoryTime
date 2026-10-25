@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StoryTime — Code Map</title>
+<style>
+  body { font-family: system-ui, sans-serif; color: #3d3a4b; background: #fff8ef; margin: 0; padding: 1.5rem; line-height: 1.5; }
+  h1, h2 { margin: 1.2rem 0 .5rem; }
+  .flow { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+  .box { border: 3px solid #3d3a4b; border-radius: 14px; padding: .5rem .8rem; background: #fff; box-shadow: 0 3px 0 #3d3a4b; font-weight: 700; }
+  .box small { display: block; font-weight: 400; color: #8a8698; }
+  .arrow { font-size: 1.4rem; }
+  table { border-collapse: collapse; width: 100%; background: #fff; border: 3px solid #3d3a4b; border-radius: 12px; overflow: hidden; }
+  th, td { text-align: left; padding: .45rem .7rem; border-bottom: 1px solid #e7e1d6; vertical-align: top; }
+  th { background: #fff1a8; }
+  code { background: #f3eefc; padding: 0 .3rem; border-radius: 6px; }
+  .badge { font-size: .75rem; padding: .05rem .45rem; border-radius: 999px; border: 2px solid #3d3a4b; }
+  .js { background: #cfe8ff; } .css { background: #ffd6c2; } .data { background: #c8f0dc; } .sql { background: #e4d7ff; }
+</style>
+</head>
+<body>
+<h1>📖 StoryTime — Code Map</h1>
+<p>Plain HTML/CSS/JS, no build step. <code>index.html</code> only holds the layout; each feature lives in its own small file so changes stay local.</p>
+
+<h2>How a story flows</h2>
+<div class="flow">
+  <div class="box">members.js<small>who + level</small></div><span class="arrow">→</span>
+  <div class="box">dials.js<small>spin values</small></div><span class="arrow">→</span>
+  <div class="box">opening.js<small>pick template</small></div><span class="arrow">→</span>
+  <div class="box">narrate.js / recorder.js<small>tell + record</small></div><span class="arrow">→</span>
+  <div class="box">decisions.js / keywords.js<small>forks + tags</small></div><span class="arrow">→</span>
+  <div class="box">save.js<small>review</small></div><span class="arrow">→</span>
+  <div class="box">db.js<small>device + Supabase</small></div><span class="arrow">→</span>
+  <div class="box">library.js / dashboard.js</div>
+</div>
+<p>All modules share two objects from <code>js/state.js</code>: <code>App</code> (members, current member, level, saved stories) and <code>Story</code> (the story being told). After a change a module calls <code>Story.changed('transcript')</code> etc.; others listen with <code>Story.on(...)</code>.</p>
+
+<h2>Files</h2>
+<table>
+  <tr><th>File</th><th></th><th>What it does</th></tr>
+  <tr><td><code>index.html</code></td><td></td><td>Page layout: top bar, left play column (dials, story), right +/- panels (Forks, Keywords, Save, Library, Dashboard), gear drawer, modal, toast, error panel. Script load order at the bottom.</td></tr>
+  <tr><td><code>data/levels.js</code></td><td><span class="badge data">DATA</span></td><td><code>LEVELS</code> K → G6 with character targets, pinyin default, read-aloud speed. <code>DEFAULT_LEVEL</code>.</td></tr>
+  <tr><td><code>data/dials.js</code></td><td><span class="badge data">DATA</span></td><td><code>DEFAULT_DIALS</code> (Tone, Setting, Character) and <code>EXTRA_DIALS</code> (Time, Quest, Emotion, Weather). Option <code>en</code> values are the template tags.</td></tr>
+  <tr><td><code>data/templates.js</code></td><td><span class="badge data">DATA</span></td><td><code>STORY_TEMPLATES</code>: 50 openings (zh + en + tags), weighted toward K.</td></tr>
+  <tr><td><code>data/stop_words.js</code></td><td><span class="badge data">DATA</span></td><td><code>STOP_WORDS</code> ignored by the keyword cloud.</td></tr>
+  <tr><td><code>js/config.js</code></td><td><span class="badge js">JS</span></td><td>Supabase URL/key/timeout, <code>DEFAULT_MEMBERS</code>, <code>PROMPT_WORDS</code> (narration buttons), <code>MAX_KEYWORDS</code>, localStorage keys.</td></tr>
+  <tr><td><code>js/db.js</code></td><td><span class="badge js">JS</span></td><td>Error log (<code>_logError</code>), shared family sign-in, members (Supabase → cache → defaults), per-member level, stories (device first, then Supabase sync).</td></tr>
+  <tr><td><code>js/state.js</code></td><td><span class="badge js">JS</span></td><td><code>App</code>, <code>Story</code>, <code>newId</code>, <code>fmtDuration</code>, <code>escapeHtml</code>.</td></tr>
+  <tr><td><code>js/ui.js</code></td><td><span class="badge js">JS</span></td><td>Web Audio blips, toast, modal, gear drawer (sign-in, sounds, speech speed, show errors), bottom error panel.</td></tr>
+  <tr><td><code>js/members.js</code></td><td><span class="badge js">JS</span></td><td>Member chips + level dropdown; remembers each member's level.</td></tr>
+  <tr><td><code>js/dials.js</code></td><td><span class="badge js">JS</span></td><td>Render, spin (rolling animation), ◀ ▶ tweak, add/remove dials, custom dial form.</td></tr>
+  <tr><td><code>js/opening.js</code></td><td><span class="badge js">JS</span></td><td>Scores templates: <b>2 × matching tags − level distance</b>, random tie-break. Seeds transcript, sets name + tags. Pinyin (pinyin-pro) and English toggles.</td></tr>
+  <tr><td><code>js/narrate.js</code></td><td><span class="badge js">JS</span></td><td>Prompt buttons insert at cursor, transcript editing, zh-CN read-aloud (speed by level).</td></tr>
+  <tr><td><code>js/recorder.js</code></td><td><span class="badge js">JS</span></td><td>MediaRecorder, timer, playback, Share (share sheet) with Download fallback. Audio is not uploaded.</td></tr>
+  <tr><td><code>js/decisions.js</code></td><td><span class="badge js">JS</span></td><td>2-choice / 3-choice / slider forks; choice logged to <code>decisions[]</code> and the transcript.</td></tr>
+  <tr><td><code>js/keywords.js</code></td><td><span class="badge js">JS</span></td><td>Word counts via <code>Intl.Segmenter</code> (fallback: repeated 2-char pairs); tag cloud; pick up to 4.</td></tr>
+  <tr><td><code>js/save.js</code></td><td><span class="badge js">JS</span></td><td>Review panel and Save.</td></tr>
+  <tr><td><code>js/library.js</code></td><td><span class="badge js">JS</span></td><td>Saved stories (mine / all family), open, read aloud, export JSON, delete.</td></tr>
+  <tr><td><code>js/dashboard.js</code></td><td><span class="badge js">JS</span></td><td>Story count, time told, forks, top keywords, "next time try" hints.</td></tr>
+  <tr><td><code>js/app.js</code></td><td><span class="badge js">JS</span></td><td>Startup order; loads device data first, then Supabase.</td></tr>
+  <tr><td><code>css/*.css</code></td><td><span class="badge css">CSS</span></td><td><code>base</code> (pastel tokens in <code>:root</code>, two-column layout, buttons, panels, gear), <code>dials</code>, <code>narrate</code>, <code>library</code>.</td></tr>
+  <tr><td><code>supabase/schema.sql</code></td><td><span class="badge sql">SQL</span></td><td><code>storytime_stories</code>, <code>storytime_member_settings</code>; RLS for the signed-in family login.</td></tr>
+</table>
+
+<h2>Common tweaks</h2>
+<table>
+  <tr><th>Want to…</th><th>Edit</th></tr>
+  <tr><td>Add / change dial options</td><td><code>data/dials.js</code> (keep <code>en</code> lowercase so it matches tags)</td></tr>
+  <tr><td>Add a story opening</td><td><code>data/templates.js</code> — give it a unique <code>id</code>, a <code>level</code> from <code>LEVELS</code>, and tags</td></tr>
+  <tr><td>Change pinyin default or read speed per level</td><td><code>data/levels.js</code></td></tr>
+  <tr><td>Change narration helper buttons</td><td><code>PROMPT_WORDS</code> in <code>js/config.js</code></td></tr>
+  <tr><td>Change colors</td><td><code>:root</code> in <code>css/base.css</code></td></tr>
+</table>
+</body>
+</html>

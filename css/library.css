@@ -1,0 +1,38 @@
+/* StoryTime — save review, library cards, dashboard */
+
+.review { display: grid; grid-template-columns: auto 1fr; gap: .3rem .8rem; margin: .6rem 0; }
+.review dt { font-weight: 800; color: var(--muted); }
+.review dd { margin: 0; }
+.review-text {
+  font-family: 'Noto Sans SC', sans-serif; background: #fffdf8;
+  border: 2px dashed var(--muted); border-radius: 12px; padding: .6rem; min-height: 2.5rem;
+}
+
+.story-card {
+  border: var(--line); border-left: 12px solid var(--chip); border-radius: 14px;
+  padding: .6rem .8rem; margin-top: .7rem; background: #fff;
+}
+.story-top { display: flex; align-items: center; gap: .4rem; font-size: 1.1rem; }
+.story-top .avatar { font-size: 1.4rem; }
+.story-top .pill { margin-left: auto; }
+.story-meta { color: var(--muted); font-size: .9rem; }
+.story-kw { margin: .3rem 0; }
+.story-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-bottom: 1rem; }
+.stat {
+  border: var(--line); border-radius: 14px; background: var(--sky);
+  text-align: center; padding: .5rem; display: flex; flex-direction: column;
+}
+.stat:nth-child(2) { background: var(--mint); }
+.stat:nth-child(3) { background: var(--peach); }
+.stat b { font-size: 1.6rem; }
+.stat span { font-size: .8rem; color: #5c5870; }
+
+.bar-row { display: grid; grid-template-columns: 5.5rem 1fr 2rem; gap: .5rem; align-items: center; margin: .25rem 0; }
+.bar-label { font-family: 'Noto Sans SC', sans-serif; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar { height: 18px; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; background: #fff; }
+.bar span { display: block; height: 100%; background: var(--lilac); }
+.bar-n { font-weight: 800; text-align: right; }
+.hints { padding-left: 1.2rem; margin: .3rem 0; }
+.hints li { margin: .3rem 0; }

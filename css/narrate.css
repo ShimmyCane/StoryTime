@@ -1,0 +1,75 @@
+/* StoryTime — opening, prompts, transcript, recorder, forks, keywords */
+
+.clock { font-weight: 800; color: var(--muted); }
+
+.opening-tools { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: .6rem; }
+.opening {
+  border: var(--line); border-radius: 16px; background: var(--lemon);
+  padding: 1rem; min-height: 120px;
+}
+.big-hint { font-size: 1.1rem; text-align: center; margin: 1.2rem 0; }
+.opening-zh { font-family: 'Noto Sans SC', sans-serif; font-size: 1.6rem; line-height: 1.7; }
+.opening-zh.with-pinyin { line-height: 2.4; }
+.opening-zh ruby rt, .opening-zh .py-pinyin-item { font-size: .55em; color: #7a6a9a; font-family: 'Baloo 2', sans-serif; }
+.opening-en { margin-top: .5rem; color: #5c5870; font-size: 1.05rem; }
+.opening-meta { margin-top: .5rem; color: var(--muted); font-size: .8rem; }
+
+.prompts { display: flex; gap: .5rem; flex-wrap: wrap; margin: .9rem 0 .5rem; }
+.prompt-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 58px; min-width: 88px; padding: 0 .7rem;
+  border: var(--line); border-radius: 14px; background: var(--lilac);
+  box-shadow: 0 3px 0 var(--ink); cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--ink);
+}
+.prompt-btn small { font-family: 'Baloo 2', sans-serif; font-weight: 600; font-size: .7rem; color: var(--muted); }
+.prompt-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+
+#transcript {
+  width: 100%; min-height: 200px; resize: vertical;
+  border: var(--line); border-radius: 16px; padding: .8rem;
+  font-family: 'Noto Sans SC', sans-serif; font-size: 1.25rem; line-height: 1.7;
+  background: #fffdf8;
+}
+
+.rec-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .6rem;
+  margin-top: 1rem; padding-top: 1rem; border-top: 2px dashed var(--muted);
+}
+.big-btn.rec { background: var(--coral); }
+.big-btn.rec.recording { background: #ff6b6b; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { filter: brightness(1.15); } }
+.rec-time { font-weight: 800; min-width: 3.5rem; font-variant-numeric: tabular-nums; }
+#recAudio { height: 48px; max-width: 100%; }
+
+/* forks */
+.fork-types { display: flex; gap: .4rem; margin-bottom: .4rem; }
+.fork-type {
+  flex: 1; min-height: 48px; font: inherit; font-weight: 800;
+  border: var(--line); border-radius: 12px; background: #fff; cursor: pointer;
+}
+.fork-type.on { background: var(--mint); }
+.fork-options { display: grid; gap: 0; margin-bottom: .4rem; }
+.fork-pending:not(:empty) {
+  margin-top: .8rem; padding: .8rem; border: var(--line); border-radius: 14px; background: var(--lemon);
+}
+.fork-q { font-weight: 800; font-size: 1.15rem; margin: 0 0 .5rem; }
+.fork-choices { display: flex; flex-wrap: wrap; gap: .5rem; }
+.slider-row { display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+.slider-row input { flex: 1; height: 36px; }
+.fork-log { list-style: none; padding: 0; margin: .8rem 0 0; }
+.fork-log li { display: flex; align-items: center; gap: .4rem; padding: .3rem 0; border-bottom: 1px dashed #ddd; }
+.mini-x {
+  margin-left: auto; width: 32px; height: 32px; flex: none;
+  border: 2px solid var(--ink); border-radius: 50%; background: #fff; cursor: pointer;
+}
+
+/* keywords tag cloud */
+.tag-cloud { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.tag {
+  min-height: 44px; padding: 0 .7rem;
+  border: 2px solid var(--ink); border-radius: 999px; background: #fff; cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif; font-weight: 700; color: var(--ink);
+}
+.tag sup { font-size: .6em; color: var(--muted); margin-left: .15rem; }
+.tag.picked { background: var(--lemon); box-shadow: 0 3px 0 var(--ink); }

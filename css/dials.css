@@ -1,0 +1,41 @@
+/* StoryTime — dials + add-dial modal */
+
+.dials {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: .8rem;
+}
+.dial {
+  border: var(--line); border-radius: 16px;
+  background: var(--peach); padding: .6rem;
+  box-shadow: 0 3px 0 var(--ink);
+}
+.dial:nth-child(3n+2) { background: var(--mint); }
+.dial:nth-child(3n+3) { background: var(--sky); }
+.dial-head { display: flex; align-items: center; gap: .35rem; font-weight: 800; min-height: 32px; }
+.dial-head small { color: var(--muted); font-weight: 600; }
+.dial-emoji { font-size: 1.3rem; }
+.dial-x {
+  margin-left: auto; width: 32px; height: 32px;
+  border: 2px solid var(--ink); border-radius: 50%; background: #fff; cursor: pointer; font-weight: 800;
+}
+.dial-window { display: flex; align-items: stretch; gap: .35rem; margin-top: .4rem; }
+.dial-arrow {
+  width: 36px; min-height: 76px; flex: none; padding: 0;
+  border: var(--line); border-radius: 12px; background: #fff; cursor: pointer; font-size: 1rem;
+}
+.dial-value {
+  flex: 1; min-height: 76px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: var(--line); border-radius: 12px; background: #fff; cursor: pointer;
+  overflow: hidden;   /* fixed size so spinning text doesn't push things around */
+}
+.dial-value .zh { font-family: 'Noto Sans SC', sans-serif; font-size: 1.45rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+.dial-value .en { color: var(--muted); font-size: .85rem; }
+.dial-value.spinning .zh { animation: wobble .12s linear infinite; }
+@keyframes wobble {
+  0% { transform: translateY(-3px); } 50% { transform: translateY(3px); } 100% { transform: translateY(-3px); }
+}
+
+.extra-dials { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1rem; }
+.extra-dials small { color: var(--muted); }

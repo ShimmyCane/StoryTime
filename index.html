@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>StoryTime 讲故事</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Noto+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/dials.css">
+  <link rel="stylesheet" href="css/narrate.css">
+  <link rel="stylesheet" href="css/library.css">
+</head>
+<body>
+  <!-- ===== Top bar: title, who is telling, reading level ===== -->
+  <header class="topbar">
+    <h1>📖 StoryTime <span>讲故事</span> <span id="cloudBadge" class="cloud">📱</span></h1>
+    <div id="memberBar" class="member-bar"></div>
+    <div class="level-box">
+      <select id="levelSelect" aria-label="Reading level"></select>
+      <small id="levelHint"></small>
+    </div>
+  </header>
+
+  <main class="app">
+    <!-- ===== Left (play side): dials + story ===== -->
+    <section class="play">
+      <div class="card" id="dialsCard">
+        <h2>① 转一转 <small>Spin</small></h2>
+        <div id="dials" class="dials"></div>
+        <div class="row">
+          <button id="spinAllBtn" class="big-btn soft">🎲 Spin all</button>
+          <button id="addDialBtn" class="big-btn soft">＋ Dial</button>
+          <button id="generateBtn" class="big-btn primary">✨ Start story 开始</button>
+        </div>
+      </div>
+
+      <div class="card" id="storyCard">
+        <div class="card-head">
+          <h2>② 讲故事 <small>Narrate</small></h2>
+          <span id="storyClock" class="clock">⏱ 0:00</span>
+        </div>
+        <div class="opening-tools">
+          <button id="readOpeningBtn" class="mid-btn">🔊 Read 读</button>
+          <button id="pinyinBtn" class="mid-btn toggle">拼 pinyin</button>
+          <button id="englishBtn" class="mid-btn toggle">EN</button>
+        </div>
+        <div id="opening" class="opening"></div>
+
+        <div id="prompts" class="prompts"></div>
+        <textarea id="transcript" rows="8" placeholder="接着讲… Keep telling the story (tip: tap 🎤 on the keyboard to talk)"></textarea>
+        <div class="row">
+          <button id="readStoryBtn" class="mid-btn">🔊 Read my story</button>
+          <button id="stopReadBtn" class="mid-btn">⏹</button>
+        </div>
+
+        <div class="rec-bar">
+          <button id="recBtn" class="big-btn rec">🎙 Record 录音</button>
+          <span id="recTime" class="rec-time"></span>
+          <audio id="recAudio" controls class="hidden"></audio>
+          <button id="shareBtn" class="mid-btn hidden">📤 Share 分享</button>
+          <button id="downloadBtn" class="mid-btn hidden">⬇︎ Save file</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Right: stacked +/- panels ===== -->
+    <section class="side">
+      <details class="panel" open>
+        <summary>🔀 Forks 选择</summary>
+        <div class="fork-types">
+          <button class="fork-type" data-type="two">2 choices</button>
+          <button class="fork-type" data-type="three">3 choices</button>
+          <button class="fork-type" data-type="slider">Slider</button>
+        </div>
+        <input id="forkQuestion" placeholder="接下来怎么办？ What happens next?">
+        <div id="forkOptions" class="fork-options"></div>
+        <button id="forkMakeBtn" class="big-btn soft">Ask 问一问</button>
+        <div id="forkPending" class="fork-pending"></div>
+        <ul id="forkLog" class="fork-log"></ul>
+      </details>
+
+      <details class="panel" open>
+        <summary>🏷 Keywords 关键词 <span id="keywordCount" class="count"></span></summary>
+        <div id="tagCloud" class="tag-cloud"></div>
+      </details>
+
+      <details class="panel">
+        <summary>💾 Save 保存</summary>
+        <label class="field">Name 名字 <input id="storyName"></label>
+        <dl class="review">
+          <dt>Who</dt><dd id="reviewWho"></dd>
+          <dt>Dials</dt><dd id="reviewCombo"></dd>
+          <dt>Tags</dt><dd id="reviewTags"></dd>
+          <dt>Keywords</dt><dd id="reviewKeywords"></dd>
+          <dt>Forks</dt><dd id="reviewDecisions"></dd>
+          <dt>Time</dt><dd id="reviewDuration"></dd>
+        </dl>
+        <p id="reviewTranscript" class="review-text"></p>
+        <button id="saveBtn" class="big-btn primary">💾 Save story</button>
+      </details>
+
+      <details class="panel">
+        <summary>📚 Library 故事书 <span id="libraryCount" class="count"></span></summary>
+        <div class="row between">
+          <label class="switch"><input type="checkbox" id="libraryAllToggle"> All family 全家</label>
+          <button id="exportAllBtn" class="mid-btn">⬇︎ Export JSON</button>
+        </div>
+        <div id="libraryList"></div>
+      </details>
+
+      <details class="panel">
+        <summary>📊 Dashboard 统计</summary>
+        <div id="dashboard"></div>
+      </details>
+    </section>
+  </main>
+
+  <!-- ===== Gear + settings drawer (lower right) ===== -->
+  <button id="gearBtn" class="gear" aria-label="Settings">⚙️</button>
+  <div id="settingsPanel" class="drawer hidden">
+    <h3>Settings 设置</h3>
+    <div id="authForm">
+      <p class="muted">Family sign-in (same as Family Habits) to sync stories.</p>
+      <input id="authEmail" type="email" placeholder="email" autocomplete="username">
+      <input id="authPassword" type="password" placeholder="password" autocomplete="current-password">
+      <button id="signInBtn" class="mid-btn">Sign in</button>
+    </div>
+    <div id="authStatus" class="hidden">
+      <p>☁️ <span id="authWho"></span></p>
+      <button id="signOutBtn" class="mid-btn">Sign out</button>
+    </div>
+    <hr>
+    <label class="switch"><input type="checkbox" id="soundToggle"> Sounds</label>
+    <label class="field">Read-aloud speed
+      <select id="rateSelect">
+        <option value="">By level</option>
+        <option value="0.6">Slow</option>
+        <option value="0.8">Medium</option>
+        <option value="1">Normal</option>
+      </select>
+    </label>
+    <label class="switch"><input type="checkbox" id="showErrorsToggle"> Show errors</label>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+  <div id="errorPanel" class="error-panel hidden"></div>
+
+  <!-- libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.19.6/dist/index.js"></script>
+  <!-- editable data -->
+  <script src="data/levels.js"></script>
+  <script src="data/dials.js"></script>
+  <script src="data/templates.js"></script>
+  <script src="data/stop_words.js"></script>
+  <!-- app -->
+  <script src="js/config.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/members.js"></script>
+  <script src="js/dials.js"></script>
+  <script src="js/opening.js"></script>
+  <script src="js/narrate.js"></script>
+  <script src="js/recorder.js"></script>
+  <script src="js/decisions.js"></script>
+  <script src="js/keywords.js"></script>
+  <script src="js/save.js"></script>
+  <script src="js/library.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
