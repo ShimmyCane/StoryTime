@@ -3,6 +3,7 @@ StoryTime — todo
 Setup (Jimmy)
 - [x] Run `supabase/schema.sql` on the Family project (applied 2026-10-23 as migration `storytime_tables`)
 - [ ] Open on the iPad, sign in through ⚙️ with the family login, save one story, check it shows ☁️
+- [ ] After the November credits refresh: sign in, press ⚙️ → Test AI, then try 🤖 AI opening, 🤖 Suggest, and 🤖 Critique (Gemini key is in the storytime_ai_key table; function `ai` is deployed)
 
 Check on a real iPad
 - [ ] Share 📤 → WhatsApp / Messages receives the audio
