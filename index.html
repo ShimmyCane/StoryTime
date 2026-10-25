@@ -17,6 +17,7 @@
   <!-- ===== Top bar: title, who is telling, reading level ===== -->
   <header class="topbar">
     <h1>📖 StoryTime <span>讲故事</span> <span id="cloudBadge" class="cloud">📱</span></h1>
+    <span id="aiStatus" class="ai-pill unknown" title="Not tested yet">AI ?</span>
     <div id="memberBar" class="member-bar"></div>
     <div class="level-box">
       <select id="levelSelect" aria-label="Reading level"></select>
@@ -46,6 +47,7 @@
           <button id="readOpeningBtn" class="mid-btn">🔊 Read 读</button>
           <button id="pinyinBtn" class="mid-btn toggle">拼 pinyin</button>
           <button id="englishBtn" class="mid-btn toggle">EN</button>
+          <button id="aiOpeningBtn" class="mid-btn">🤖 AI opening</button>
         </div>
         <div id="opening" class="opening"></div>
 
@@ -69,7 +71,7 @@
     <!-- ===== Right: stacked +/- panels ===== -->
     <section class="side">
       <details class="panel" open>
-        <summary>🔀 Forks 选择</summary>
+        <summary>③ 🔀 Forks 选择</summary>
         <div class="fork-types">
           <button class="fork-type" data-type="two">2 choices</button>
           <button class="fork-type" data-type="three">3 choices</button>
@@ -77,18 +79,21 @@
         </div>
         <input id="forkQuestion" placeholder="接下来怎么办？ What happens next?">
         <div id="forkOptions" class="fork-options"></div>
-        <button id="forkMakeBtn" class="big-btn soft">Ask 问一问</button>
+        <div class="row">
+          <button id="forkMakeBtn" class="big-btn soft">Ask 问一问</button>
+          <button id="aiForksBtn" class="mid-btn">🤖 Suggest 建议</button>
+        </div>
         <div id="forkPending" class="fork-pending"></div>
         <ul id="forkLog" class="fork-log"></ul>
       </details>
 
       <details class="panel" open>
-        <summary>🏷 Keywords 关键词 <span id="keywordCount" class="count"></span></summary>
+        <summary>④ 🏷 Keywords 关键词 <span id="keywordCount" class="count"></span></summary>
         <div id="tagCloud" class="tag-cloud"></div>
       </details>
 
       <details class="panel">
-        <summary>💾 Save 保存</summary>
+        <summary>⑤ 💾 Save 保存</summary>
         <label class="field">Name 名字 <input id="storyName"></label>
         <dl class="review">
           <dt>Who</dt><dd id="reviewWho"></dd>
@@ -99,11 +104,14 @@
           <dt>Time</dt><dd id="reviewDuration"></dd>
         </dl>
         <p id="reviewTranscript" class="review-text"></p>
+        <div class="row">
+          <button id="aiCritiqueBtn" class="mid-btn">🤖 Critique 点评</button>
+        </div>
         <button id="saveBtn" class="big-btn primary">💾 Save story</button>
       </details>
 
       <details class="panel">
-        <summary>📚 Library 故事书 <span id="libraryCount" class="count"></span></summary>
+        <summary>⑥ 📚 Library 故事书 <span id="libraryCount" class="count"></span></summary>
         <div class="row between">
           <label class="switch"><input type="checkbox" id="libraryAllToggle"> All family 全家</label>
           <button id="exportAllBtn" class="mid-btn">⬇︎ Export JSON</button>
@@ -112,7 +120,7 @@
       </details>
 
       <details class="panel">
-        <summary>📊 Dashboard 统计</summary>
+        <summary>⑦ 📊 Dashboard 统计</summary>
         <div id="dashboard"></div>
       </details>
     </section>
@@ -143,6 +151,11 @@
       </select>
     </label>
     <label class="switch"><input type="checkbox" id="showErrorsToggle"> Show errors</label>
+    <hr>
+    <h3>AI 智能助手</h3>
+    <p class="muted">Uses the key saved in Supabase. Shows what is wrong if AI is not working.</p>
+    <button id="aiTestBtn" class="mid-btn">Test AI 测试</button>
+    <p id="aiTestResult" class="muted"></p>
   </div>
 
   <div id="modal" class="modal hidden">
@@ -174,6 +187,7 @@
   <script src="js/recorder.js"></script>
   <script src="js/decisions.js"></script>
   <script src="js/keywords.js"></script>
+  <script src="js/ai.js"></script>
   <script src="js/save.js"></script>
   <script src="js/library.js"></script>
   <script src="js/dashboard.js"></script>

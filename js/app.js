@@ -11,6 +11,7 @@ const AppBoot = {
     Decisions.init();
     Keywords.init();
     Save.init();
+    AI.init();
     Library.init();
     Dials.init();          // auto-spins on load
 
